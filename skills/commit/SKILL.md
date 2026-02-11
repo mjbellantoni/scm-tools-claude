@@ -9,7 +9,7 @@ Stage and commit changes with proper commit message formatting.
 
 ## Git Executable
 
-If `bin/git` exists in the project root, use `bin/git` instead of `git` for the commit step. All other git commands (status, diff, add, log, etc.) use plain `git`.
+If `bin/scm-tools-git` exists in the project root, use `bin/scm-tools-git` instead of `git` for the commit step. All other git commands (status, diff, add, log, etc.) use plain `git`.
 
 ## Workflow
 
