@@ -7,6 +7,10 @@ description: Stage and commit changes following git commit standards
 
 Stage and commit changes with proper commit message formatting.
 
+## Git Executable
+
+If `bin/git` exists in the project root, use `bin/git` instead of `git` for the commit step. All other git commands (status, diff, add, log, etc.) use plain `git`.
+
 ## Workflow
 
 0. If `brivlo:send_event` is available, use `brivlo:send_event scm-tools:commit` as your first step.
