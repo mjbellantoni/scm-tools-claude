@@ -9,7 +9,7 @@ Stage and commit changes with proper commit message formatting.
 
 ## Git Executable
 
-If `bin/scm-tools-git` exists in the project root, use `bin/scm-tools-git` instead of `git` for the commit step. All other git commands (status, diff, add, log, etc.) use plain `git`.
+If `bin/scm-tools-git` exists in the project root, use `bin/scm-tools-git` instead of `git` for the add and commit steps. All other git commands (status, diff, log, etc.) use plain `git`.
 
 ## Workflow
 
@@ -24,10 +24,10 @@ If `bin/scm-tools-git` exists in the project root, use `bin/scm-tools-git` inste
 
 2. **Stage explicitly:**
    ```bash
-   git add app/models/user.rb
-   git add spec/models/user_spec.rb
+   bin/scm-tools-git add app/models/user.rb
+   bin/scm-tools-git add spec/models/user_spec.rb
    ```
-   Or interactively: `git add -p`
+   Or interactively: `bin/scm-tools-git add -p`
 
 3. **Verify staging:**
    ```bash
@@ -57,11 +57,11 @@ If `bin/scm-tools-git` exists in the project root, use `bin/scm-tools-git` inste
 
 | Task     | Do                             | Don't                     |
 | -------- | ------------------------------ | ------------------------- |
-| Stage    | `git add <path>`, `git add -p` | `git add -A`, `git add .` |
+| Stage    | `bin/scm-tools-git add <path>`, `bin/scm-tools-git add -p` | `git add -A`, `git add .` |
 | Unstage  | `git restore --staged <path>`  | `git reset <path>`        |
 
 - Stage explicitly; no blanket adds
-- Use `git add -p` to split changes into logical commits
+- Use `bin/scm-tools-git add -p` to split changes into logical commits
 
 ### File Operations
 
