@@ -35,8 +35,6 @@ Include:
 
 ## Process
 
-0. If `brivlo:send_event` is available, use `brivlo:send_event scm-tools:pr` as your first step.
-
 1. Check current branch status and commits since diverging from base
 2. Determine base branch (use argument if provided, otherwise `main`)
 3. Push branch to remote if needed

@@ -13,8 +13,6 @@ If `bin/scm-tools-git` exists in the project root, use `bin/scm-tools-git` inste
 
 ## Workflow
 
-0. If `brivlo:send_event` is available, use `brivlo:send_event scm-tools:commit` as your first step.
-
 1. **Review changes:**
    ```bash
    git status

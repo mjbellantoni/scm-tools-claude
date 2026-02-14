@@ -12,10 +12,6 @@ detaching HEAD at that commit, and deleting the local working branch.
 
 ## The Process
 
-### Phase 0: Brivlo
-
-If `brivlo:send_event` is available, use `brivlo:send_event scm-tools:cleanup-worktree` as your first step.
-
 ### Phase 1: Identify Current Branch
 
 ```bash

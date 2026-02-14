@@ -16,10 +16,6 @@ Some PRs are rebased instead - this skill is not for those.
 **This is a two-phase skill.** Phase 1 drafts the message and stops.
 Phase 2 executes the merge after user approval.
 
-## Phase 0: Brivlo
-
-If `brivlo:send_event` is available, use `brivlo:send_event scm-tools:squash-merge` as your first step.
-
 ## Phase 1: Draft Commit Message
 
 ### Step 1: Get PR Details
