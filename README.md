@@ -16,6 +16,10 @@ Create a pull request for the current branch. The PR title follows commit messag
 
 Squash merge a PR via GitHub's API using `gh pr merge --squash`. Two-phase workflow: drafts a commit message following the project's commit standards, then waits for explicit approval before merging. Not for rebase merges.
 
+### `/cleanup-commits`
+
+Reorganize messy branch commits into clean, reviewable history before opening a PR or after review rounds. Uses a three-bucket model (extracted, feature, junk drawer) with an analyze-then-confirm loop. Includes pre-flight safety checks for file overlap before reordering and multi-pass rebase execution with diff verification.
+
 ### `/cleanup-worktree`
 
 Post-merge branch cleanup. Fetches the latest main, detaches HEAD at that commit, and deletes the local working branch. Safe by default — uses `git branch -d` and asks before force-deleting unmerged branches.
