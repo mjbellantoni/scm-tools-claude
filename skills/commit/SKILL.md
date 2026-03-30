@@ -85,6 +85,7 @@ If `bin/scm-tools-git` exists in the project root, use `bin/scm-tools-git` inste
 5. **Wrap body at 72 characters** — insert line breaks manually
 6. **Explain what and why, not how**
 7. **NEVER add branding or footers** — no Co-Authored-By, no signatures
+8. **ASCII only** — no Unicode dashes (—, –), quotes (" " ' '), arrows (→), or other non-ASCII characters. Use plain hyphens (-), straight quotes (' "), and ASCII arrows (->)
 
 ### Good Examples
 ```
@@ -98,6 +99,9 @@ Update dependencies to patch CVE-2024-1234
 Fixed the bug                    # past tense, vague
 Updates to the login page.       # third person, period, vague
 WIP                              # meaningless
+Add validation for "email"       # smart quotes, use straight quotes
+Fix timeout — increase to 30s    # em dash, use hyphen
+Update deps → patch CVE          # Unicode arrow, use ->
 ```
 
 ## When to Split Commits

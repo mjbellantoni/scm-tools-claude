@@ -38,10 +38,11 @@ Follow the commit message rules from `/commit`:
 1. **Subject line ≤50 characters**
 2. **Capitalize the subject**
 3. **No period at the end**
-4. **Imperative mood** — "Add", "Fix", "Update" (not "Added", "Fixed")
+4. **Imperative mood** - "Add", "Fix", "Update" (not "Added", "Fixed")
 5. **Wrap body at 72 characters** (if body needed)
 6. **Explain what and why, not how**
 7. **NEVER add branding or footers**
+8. **ASCII only** - no Unicode dashes, quotes, arrows, or other non-ASCII characters
 
 ### Step 4: Present and STOP
 
@@ -91,6 +92,7 @@ If you catch yourself doing these, STOP:
 - **Adding Co-Authored-By or footers** - Never add branding
 - **Subject over 50 chars** - Shorten it
 - **Past tense verbs** - Use imperative mood
+- **Non-ASCII characters in message** - Use only printable ASCII
 - **Using this for rebase merges** - This skill is for squash only
 
 ## Quick Reference
