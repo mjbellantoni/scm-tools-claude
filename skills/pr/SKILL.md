@@ -35,8 +35,18 @@ Include:
 
 ## Process
 
-1. Check current branch status and commits since diverging from base
-2. Determine base branch (use argument if provided, otherwise `main`)
-3. Push branch to remote if needed
-4. Create PR with properly formatted title and body using `gh pr create`
-5. Return the PR URL
+1. **Commit hygiene check** — before anything else, scan for fixup commits:
+   ```bash
+   git log --oneline $(git merge-base HEAD main)..HEAD
+   ```
+   If any commit messages match these patterns (case-insensitive), invoke
+   `scm-tools:cleanup-commits` before proceeding:
+   - `fixup!` or `squash!`
+   - `WIP`
+   - `address review` or `review feedback`
+   - `lint`, `rubocop`, `typo` as standalone fixes
+2. Check current branch status and commits since diverging from base
+3. Determine base branch (use argument if provided, otherwise `main`)
+4. Push branch to remote if needed
+5. Create PR with properly formatted title and body using `gh pr create`
+6. Return the PR URL

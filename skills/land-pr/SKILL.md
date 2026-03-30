@@ -19,7 +19,25 @@ git branch --show-current
 Store this BEFORE any other step. You need it for remote branch deletion
 after the merge, and checkout operations in later steps will lose it.
 
-### 2. Merge the PR
+### 2. Commit hygiene check
+
+For rebase merges (where individual commits are preserved), scan for fixup
+commits:
+
+```bash
+git log --oneline $(git merge-base HEAD main)..HEAD
+```
+
+If any commit messages match these patterns (case-insensitive), invoke
+`scm-tools:cleanup-commits` before merging:
+- `fixup!` or `squash!`
+- `WIP`
+- `address review` or `review feedback`
+- `lint`, `rubocop`, `typo` as standalone fixes
+
+Skip this check for squash merges (history is collapsed anyway).
+
+### 3. Merge the PR
 
 **Rebase merge (default):**
 
@@ -32,22 +50,22 @@ gh pr merge --rebase
 Invoke `scm-tools:squash-merge`. This handles commit message drafting and
 user approval before merging.
 
-### 3. Delete remote branch
+### 4. Delete remote branch
 
 ```bash
 git push origin --delete <branch-name>
 ```
 
 GitHub may auto-delete depending on repo settings. If the command fails
-because the branch is already gone, that is expected — continue to step 4.
+because the branch is already gone, that is expected — continue to step 5.
 
-### 4. Clean up locally
+### 5. Clean up locally
 
 Invoke `scm-tools:cleanup-worktree`.
 
 Fetches main, detaches HEAD at origin/main, deletes the local branch.
 
-### 5. Finish Trello card
+### 6. Finish Trello card
 
 Invoke `trello-cli:finish-card`.
 
@@ -68,8 +86,9 @@ not mention Trello explicitly.
 | Step | Action | Tool |
 |------|--------|------|
 | 1 | Capture branch name | `git branch --show-current` |
-| 2a | Rebase merge (default) | `gh pr merge --rebase` |
-| 2b | Squash merge (if requested) | `scm-tools:squash-merge` |
-| 3 | Delete remote branch | `git push origin --delete <branch>` |
-| 4 | Local cleanup | `scm-tools:cleanup-worktree` |
-| 5 | Finish Trello card | `trello-cli:finish-card` |
+| 2 | Commit hygiene check | `git log`, then `scm-tools:cleanup-commits` if needed |
+| 3a | Rebase merge (default) | `gh pr merge --rebase` |
+| 3b | Squash merge (if requested) | `scm-tools:squash-merge` |
+| 4 | Delete remote branch | `git push origin --delete <branch>` |
+| 5 | Local cleanup | `scm-tools:cleanup-worktree` |
+| 6 | Finish Trello card | `trello-cli:finish-card` |
