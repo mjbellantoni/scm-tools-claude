@@ -24,6 +24,10 @@ Reorganize messy branch commits into clean, reviewable history before opening a 
 
 Post-merge branch cleanup. Fetches the latest main, detaches HEAD at that commit, and deletes the local working branch. Safe by default — uses `git branch -d` and asks before force-deleting unmerged branches.
 
+### `/land-pr`
+
+End-to-end PR landing workflow for worktrees. Merges the PR (rebase by default, squash when requested), deletes the remote branch, invokes `/cleanup-worktree` for local reset, and finishes the Trello card. Fail-fast — stops on any error.
+
 ## Installation
 
 Add the plugin to your Claude Code settings (`~/.claude/settings.json` or project-level):
