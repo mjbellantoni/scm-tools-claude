@@ -10,7 +10,7 @@ Stage and commit changes with proper formatting. Enforces explicit file staging 
 
 ### `/pr`
 
-Create a pull request for the current branch. The PR title follows commit message rules (important for squash merges), and the body includes a summary and test plan. Uses `gh pr create` under the hood.
+Create a pull request for the current branch. Automatically checks for fixup commits (WIP, review fixes, lint fixes) and invokes `/cleanup-commits` before proceeding. The PR title follows commit message rules (important for squash merges), and the body includes a summary and test plan. Uses `gh pr create` under the hood.
 
 ### `/squash-merge`
 
