@@ -25,6 +25,15 @@ git log --oneline $MERGE_BASE..HEAD
 
 For each commit, read the diff (`git show <sha>`) to understand what it touches. Track which files each commit modifies — you will need this for the pre-flight check.
 
+**Flag kitchen-sink commits for splitting.** A commit is a kitchen-sink if:
+- Its message has bullet points listing different changes
+- Its message uses semicolons or comma-separated lists of distinct concerns
+- Its message says "and" joining unrelated changes
+- Its message starts with umbrella language ("Address review feedback", "Various fixes", "Code review updates", etc.)
+- Its diff touches unrelated files for unrelated reasons
+
+Mark these in the proposal table with a note like "kitchen-sink — propose split into N commits" and suggest individual commit messages for each concern.
+
 ### 3. Propose regrouping
 
 Present a table:
@@ -34,8 +43,8 @@ Present a table:
 
 **Buckets:**
 - **Extracted** — changes to shared/common code outside the PR's core scope. Clean, self-contained. Candidates for cherry-picking into own PR later.
-- **Feature** — the actual work the branch exists for. Multiple commits fine if they represent meaningful steps.
-- **Junk drawer** — review fixups, lint fixes, minor tweaks. Squash into one or a few commits.
+- **Feature** — the actual work the branch exists for. Multiple commits fine if they represent meaningful steps. Review fixes that are substantive (guard clauses, renames, added tests) belong here if they're already well-split into one-concern-per-commit.
+- **Junk drawer** — truly trivial fixups only: typo corrections, whitespace, formatting. Squash into one or a few commits. Do NOT lump substantive review fixes here just because they came from a review round.
 
 Call out ambiguities explicitly: "This migration supports the feature but could also stand alone — where do you want it?"
 
@@ -130,6 +139,7 @@ Confirm with the user. Remind them:
 | "Waiting serves no purpose" | Your judgment on their code is not authoritative |
 | "It's just a mechanical merge" | Mechanical merges can silently drop logic |
 | "Low risk, easily fixable with abort" | Abort mid-rebase can leave messy state. Prevent, don't recover. |
+| "This kitchen-sink commit is fine as-is" | If the message needs bullets or semicolons, it's multiple commits. Propose a split. |
 
 ## Quick Reference
 
