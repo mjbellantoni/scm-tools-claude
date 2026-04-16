@@ -102,14 +102,51 @@ WIP                              # meaningless
 Add validation for "email"       # smart quotes, use straight quotes
 Fix timeout — increase to 30s    # em dash, use hyphen
 Update deps → patch CVE          # Unicode arrow, use ->
+Address review feedback          # kitchen-sink, split into separate commits
+Fix lint errors across files     # kitchen-sink, one commit per file/concern
+Add validation; update tests     # semicolons joining unrelated changes
 ```
 
-## When to Split Commits
+## One Concern Per Commit
 
-If changes span multiple concerns, make multiple commits:
+**Each commit must address exactly one concern.** If you're about to commit
+changes that span multiple concerns, STOP and split them into separate commits.
+
+### How to detect a kitchen-sink commit
+
+Before committing, draft your commit message mentally. If any of these are
+true, you need multiple commits:
+
+- Your message has **bullet points** listing different changes
+- Your message uses **semicolons** or **comma-separated lists** of distinct concerns
+- Your message says "and" joining unrelated changes ("Fix lint errors and update API endpoint")
+- You can't summarize it in a single imperative sentence under 50 characters
+- The changes touch unrelated files for unrelated reasons
+
+### Splitting by concern
+
 - Separate refactoring from feature work
 - Separate test additions from implementation
 - Separate dependency updates from code changes
+- Separate lint/style fixes from logic changes
+- **Each independent fix is its own commit** -- even if they came from the same review round
+
+### Review feedback commits
+
+When implementing code review feedback, **each fix is its own commit** --
+not one commit per review round. Stage and commit each fix before moving to
+the next one. This makes review cleanup easier and keeps the history
+reviewable.
+
+```
+# BAD: one commit for a review round
+"Address review feedback: fix nil check, rename method, add test"
+
+# GOOD: three separate commits
+"Guard against nil user in checkout"
+"Rename process_order to fulfill_order"
+"Add test for expired coupon edge case"
+```
 
 ## Output
 
