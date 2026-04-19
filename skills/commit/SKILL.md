@@ -107,6 +107,77 @@ Fix lint errors across files     # kitchen-sink, one commit per file/concern
 Add validation; update tests     # semicolons joining unrelated changes
 ```
 
+## Body Voice and Structure
+
+The subject line is imperative and subject-elided ("Add X"). The body is
+not. Write the body in **full declarative sentences with explicit
+subjects** -- it should sound like a person explaining the change to a
+colleague, not a changelog entry.
+
+- **Restore subjects.** Every sentence needs a noun doing the verb.
+- **One paragraph per facet.** A commit touching three facets of one
+  concern gets three short paragraphs, not one dense block.
+- **Wrap at 72 characters.** (Same rule as the subject line section.)
+- **Conversational register is fine.** Parenthetical asides, hedges,
+  and natural phrasing all belong in the body.
+
+### Body anti-patterns
+
+These smells mean the subject line's register has leaked into the body:
+
+| Anti-pattern | Example |
+| --- | --- |
+| Subject-elided imperatives | "Mirrors X." "Gains Y." "Threads Z through W." |
+| Joiners doing a word's work | `+`, `&`, `;` connecting clauses, or "plus" gluing thoughts |
+| Wall of text | One paragraph covering three or more distinct facets |
+| Clipped staccato cadence | "X does Y. Y does Z. Z does W." across consecutive sentences |
+
+### Before and after
+
+**Bad** -- imperative fragments, no subjects, single paragraph:
+```
+Mirrors PasswordsController's shape with param: :token and a
+check_inbox action. Views commit to form+button semantics,
+aria-labelledby landmarks, and content_for titles. Admin layout
+gains <main> landmark and dynamic <title>.
+```
+
+**Good** -- declarative sentences, explicit subjects, one paragraph per facet:
+```
+The controller mirrors PasswordsController's shape - new, create,
+edit, update - with param: :token and a check_inbox collection
+action.
+
+The views stick to form-and-button semantics rather than
+Turbo-method links, use aria-labelledby landmarks, and set titles
+via content_for. The admin layout picks up a <main> landmark and
+a dynamic <title>.
+```
+
+**Bad** -- telegraphic "gains", semicolon-joined facets:
+```
+Extends sign_in_as_admin with a with_elevation: kwarg so existing
+admin specs stay green, and threads with_elevation: true through
+the impersonation request spec plus the users spec. Users spec
+gains a redirect assertion; session_elevations spec gains the
+return-to round-trip and cross-session PATCH rejection tests.
+```
+
+**Good** -- split into paragraphs, natural verbs:
+```
+To keep existing admin specs green, sign_in_as_admin takes a new
+with_elevation: kwarg. The impersonation request spec and the
+users spec both pass with_elevation: true.
+
+The users spec also picks up a redirect assertion for the
+unelevated case. The session_elevations spec now covers the
+return-to round-trip end-to-end and verifies that a PATCH from
+a different session is rejected.
+```
+
+Note: multi-paragraph bodies describe multiple facets of **one concern**.
+They are not license to bundle unrelated concerns into a single commit.
+
 ## One Concern Per Commit
 
 **Each commit must address exactly one concern.** If you're about to commit
