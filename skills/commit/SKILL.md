@@ -32,7 +32,13 @@ If `bin/scm-tools-git` exists in the project root, use `bin/scm-tools-git` inste
    git diff --staged
    ```
 
-4. **Commit with heredoc:**
+4. **Atomicity check:** Draft your commit message, then invoke the
+   commit-splitter agent with the staged diff and proposed message.
+   If the verdict is "split", unstage everything, stage only the
+   first unit, and restart from step 2. Commit each unit separately.
+   If "atomic", proceed to step 5.
+
+5. **Commit with heredoc:**
    ```bash
    git commit -m "$(cat <<'EOF'
    Subject line here
@@ -42,7 +48,7 @@ If `bin/scm-tools-git` exists in the project root, use `bin/scm-tools-git` inste
    )"
    ```
 
-5. **Verify:**
+6. **Verify:**
    ```bash
    git log --oneline -1
    ```
