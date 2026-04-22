@@ -34,6 +34,8 @@ For each commit, read the diff (`git show <sha>`) to understand what it touches.
 
 Mark these in the proposal table with a note like "kitchen-sink — propose split into N commits" and suggest individual commit messages for each concern.
 
+**If every commit has a single concern, a valid message, and the ordering is already coherent, report "History is already clean -- no changes needed" and stop.** Do not manufacture improvements to justify running the skill. Churning on already-clean commits punishes good commit hygiene.
+
 ### 3. Propose regrouping
 
 Present a table:
@@ -130,6 +132,7 @@ Confirm with the user. Remind them:
 - **Force-pushing without explicit confirmation** — never
 - **Skipping the backup branch** — never
 - **Skipping diff verification after a rebase pass** — always verify
+- **Proposing changes when history is already clean** — "there's always something to improve" is not a reason to churn
 
 | Rationalization | Reality |
 |---|---|
@@ -140,13 +143,14 @@ Confirm with the user. Remind them:
 | "It's just a mechanical merge" | Mechanical merges can silently drop logic |
 | "Low risk, easily fixable with abort" | Abort mid-rebase can leave messy state. Prevent, don't recover. |
 | "This kitchen-sink commit is fine as-is" | If the message needs bullets or semicolons, it's multiple commits. Propose a split. |
+| "There's always something to improve" | If commits are clean, single-concern, and well-ordered, stop. Manufacturing changes undermines good commit hygiene. |
 
 ## Quick Reference
 
 | Phase | Action | Gate |
 |---|---|---|
 | 1. Detect | `git merge-base HEAD main` | — |
-| 2. Analyze | `git log`, `git show` per commit | — |
+| 2. Analyze | `git log`, `git show` per commit | If already clean, **stop** |
 | 3. Propose | Present bucket table | — |
 | 4. Confirm | **STOP** — wait for user | **User approves** |
 | 5. Pre-flight | Check file overlaps, rate risk | **User acknowledges risk** |
