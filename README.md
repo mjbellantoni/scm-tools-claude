@@ -18,7 +18,7 @@ Squash merge a PR via GitHub's API using `gh pr merge --squash`. Two-phase workf
 
 ### `/cleanup-commits`
 
-Reorganize messy branch commits into clean, reviewable history before opening a PR or after review rounds. Uses a three-bucket model (extracted, feature, junk drawer) with an analyze-then-confirm loop. Includes pre-flight safety checks for file overlap before reordering and multi-pass rebase execution with diff verification.
+Reorganize messy branch commits into clean, reviewable history before opening a PR or after review rounds. Uses a three-bucket model (extracted, feature, junk drawer) with an analyze-then-confirm loop. Includes pre-flight safety checks for line-range overlap before reordering and multi-pass rebase execution with diff verification.
 
 ### `/cleanup-worktree`
 
