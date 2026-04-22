@@ -23,7 +23,7 @@ Store as `$MERGE_BASE`. If the branch has been rebased or has a non-standard bas
 git log --oneline $MERGE_BASE..HEAD
 ```
 
-For each commit, read the diff (`git show <sha>`) to understand what it touches. Track which files each commit modifies — you will need this for the pre-flight check.
+For each commit, read the diff (`git show --unified=0 <sha>`) to understand what it touches. Track which files and which line ranges (from `@@ -a,b +c,d @@` hunk headers) each commit modifies — you will need this for the pre-flight check.
 
 **Flag kitchen-sink commits for splitting.** Apply the heuristics from the "How to detect a kitchen-sink commit" section of `/commit`. Mark flagged commits in the proposal table with a note like "kitchen-sink -- propose split into N commits" and suggest individual commit messages for each concern.
 
@@ -57,8 +57,8 @@ Do not proceed. Do not run any git commands that modify history. Wait.
 
 Before executing any rebase, analyze the proposed operations for risk:
 
-1. For each proposed reorder, check if commits being moved past each other touch **any of the same files**.
-2. If overlap exists, report it and offer alternatives:
+1. For each proposed reorder, check if commits being moved past each other touch **overlapping line ranges within the same files**. Use the hunk headers (`@@ -a,b +c,d @@`) collected in step 2 to compare ranges. Expand each range by 3 lines (git's default context width) before comparing — adjacent hunks can conflict even without strict overlap.
+2. If overlapping ranges exist, report the specific overlapping regions and offer alternatives:
    - Leave in place, just improve the commit message
    - Squash without reordering
    - Proceed with reorder (user accepts conflict risk)
@@ -69,7 +69,8 @@ Before executing any rebase, analyze the proposed operations for risk:
 | Squash adjacent commits | Safe |
 | Improve commit message only | Safe |
 | Reorder commits touching different files | Low risk |
-| Reorder commits touching same files | **High risk — warn user** |
+| Reorder commits touching same files, non-overlapping line ranges | Moderate risk — note for user |
+| Reorder commits touching same files, overlapping line ranges | **High risk — warn user** |
 | Split commits | **Highest risk — only if user explicitly asks** |
 
 Present the risk assessment. **Wait for user to acknowledge before starting.**
@@ -120,7 +121,7 @@ Confirm with the user. Remind them:
 ## Red Flags — STOP If You Catch Yourself Doing These
 
 - **Rebasing before user approves the plan** — "They said ASAP" or "the plan is obvious" is not approval
-- **Reordering without checking file overlap** — "It should be fine" is not a safety check
+- **Reordering without checking line-range overlap** — "It should be fine" is not a safety check
 - **Auto-resolving conflicts** — "The resolution is obvious" or "it's just a mechanical merge" is not your call
 - **Force-pushing without explicit confirmation** — never
 - **Skipping the backup branch** — never
@@ -130,7 +131,7 @@ Confirm with the user. Remind them:
 | Rationalization | Reality |
 |---|---|
 | "User said ASAP, no time for confirmation" | ASAP means fast analysis, not skipping safety |
-| "The reorder is safe, files barely overlap" | Barely overlap = overlap. Warn the user. |
+| "The reorder is safe, the line ranges barely overlap" | Barely overlap = overlap. Warn the user. |
 | "Resolution is obvious, no need to stop" | Obvious to you ≠ what the user intended |
 | "Waiting serves no purpose" | Your judgment on their code is not authoritative |
 | "It's just a mechanical merge" | Mechanical merges can silently drop logic |
@@ -146,6 +147,6 @@ Confirm with the user. Remind them:
 | 2. Analyze | `git log`, `git show` per commit | If already clean, **stop** |
 | 3. Propose | Present bucket table | — |
 | 4. Confirm | **STOP** — wait for user | **User approves** |
-| 5. Pre-flight | Check file overlaps, rate risk | **User acknowledges risk** |
+| 5. Pre-flight | Check line-range overlaps, rate risk | **User acknowledges risk** |
 | 6. Execute | Backup → squash → reorder → messages | Verify diff each pass |
 | 7. Finalize | Show result, note backup exists | **User confirms** |
