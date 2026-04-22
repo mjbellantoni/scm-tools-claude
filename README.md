@@ -28,6 +28,16 @@ Post-merge branch cleanup. Fetches the latest main, detaches HEAD at that commit
 
 End-to-end PR landing workflow for worktrees. Merges the PR (rebase by default, squash when requested), deletes the remote branch, invokes `/cleanup-worktree` for local reset, and finishes the Trello card. Fail-fast — stops on any error.
 
+## Agents
+
+### `commit-splitter`
+
+Enforces one-concern-per-commit atomicity. Invoked during `/commit` with the staged diff and proposed message. Returns `{"verdict": "atomic"}` or `{"verdict": "split", "units": [...]}`.
+
+### `commit-message-reviewer`
+
+Checks a proposed commit message for mechanical rule violations. Designed to run as a pre-commit hook. Runs 11 checks: subject length, trailing period, capitalization, imperative mood, non-ASCII characters, umbrella language, body line length, body non-ASCII, forbidden footers, subject-elided verbs, and semicolons joining facets. Returns `{"verdict": "pass"}` or `{"verdict": "fail", "issues": [...]}`.
+
 ## Installation
 
 Add the plugin to your Claude Code settings (`~/.claude/settings.json` or project-level):
