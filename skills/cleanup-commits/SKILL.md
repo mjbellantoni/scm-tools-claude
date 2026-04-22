@@ -25,14 +25,7 @@ git log --oneline $MERGE_BASE..HEAD
 
 For each commit, read the diff (`git show <sha>`) to understand what it touches. Track which files each commit modifies — you will need this for the pre-flight check.
 
-**Flag kitchen-sink commits for splitting.** A commit is a kitchen-sink if:
-- Its message has bullet points listing different changes
-- Its message uses semicolons or comma-separated lists of distinct concerns
-- Its message says "and" joining unrelated changes
-- Its message starts with umbrella language ("Address review feedback", "Various fixes", "Code review updates", etc.)
-- Its diff touches unrelated files for unrelated reasons
-
-Mark these in the proposal table with a note like "kitchen-sink — propose split into N commits" and suggest individual commit messages for each concern.
+**Flag kitchen-sink commits for splitting.** Apply the heuristics from the "How to detect a kitchen-sink commit" section of `/commit`. Mark flagged commits in the proposal table with a note like "kitchen-sink -- propose split into N commits" and suggest individual commit messages for each concern.
 
 **If every commit has a single concern, a valid message, and the ordering is already coherent, report "History is already clean -- no changes needed" and stop.** Do not manufacture improvements to justify running the skill. Churning on already-clean commits punishes good commit hygiene.
 

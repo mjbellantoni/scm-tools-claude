@@ -197,6 +197,7 @@ true, you need multiple commits:
 - Your message has **bullet points** listing different changes
 - Your message uses **semicolons** or **comma-separated lists** of distinct concerns
 - Your message says "and" joining unrelated changes ("Fix lint errors and update API endpoint")
+- Your message starts with **umbrella language** ("Address review feedback", "Various fixes", "Code review updates", etc.)
 - You can't summarize it in a single imperative sentence under 50 characters
 - The changes touch unrelated files for unrelated reasons
 
